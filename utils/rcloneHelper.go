@@ -20,10 +20,11 @@ const (
 
 func InstallRclone() error {
 	//var cmd *exec.Cmd
-	installRequiredCommands()
+
 	switch os := getOS(); os {
 	case "darwin", "linux":
 		// macOS or Linux
+		installRequiredCommands()
 		if isRcloneInstalled() {
 			fmt.Println("rclone is already installed.")
 		} else {
