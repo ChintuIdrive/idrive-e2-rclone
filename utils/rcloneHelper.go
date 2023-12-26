@@ -153,7 +153,7 @@ func InstallRcloneOnLinuxMacOSUsingScript() error {
 }
 func runRCDcommand(rcloneCommand string) {
 
-	cmd := exec.Command(rcloneCommand, "rcd", "--rc-no-auth", "--rc-job-expire-duration=1h", "--log-file=E:\\rclone\\rclone.log", "-vv")
+	cmd := exec.Command(rcloneCommand, "rcd", "--rc-no-auth", "--rc-job-expire-duration=365d", "--log-file=C:\\Program Files\\rclone\\rclone.log", "-vv")
 
 	// Set the working directory if needed
 	// cmd.Dir = "/path/to/working/directory"
