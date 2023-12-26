@@ -59,6 +59,8 @@ func InstallRclone() error {
 		if !isRcloneRunning() {
 			runRCDcommand("rclone.exe")
 			time.Sleep(15 * time.Second)
+			//check rclone service is up or not after running rcd command
+			isRcloneRunning()
 		}
 
 	default:
@@ -220,10 +222,10 @@ func isRcloneRunning() bool {
 	// Make a Post request
 	response, err := makeRequest(method, url, nil)
 	if err != nil {
-		fmt.Println("Error making request:", err)
+		fmt.Println("Rclone service is not up:", err)
 		return false
 	}
-	fmt.Println("rclone process id:", string(response))
+	fmt.Println("Rclone service is up on process id:", string(response))
 	return true
 }
 func createRcloneServiceOnLinux() error {
@@ -268,6 +270,8 @@ func createRcloneServiceOnLinux() error {
 		return startErr
 	}
 
+	// check rclone service is up or not
+	isRcloneRunning()
 	return nil
 }
 
@@ -399,7 +403,7 @@ func installRcloneOnLinux(rcloneURL string, rcloneDownloadFolder string) error {
 	}
 	// Copy binary file
 	fmt.Println("Copying rclone binary to /usr/bin/...")
-	cmd := exec.Command("sudo", "scp", rcloneDownloadFolder+"/rclone", "/usr/bin/")
+	cmd := exec.Command("sudo", "cp", rcloneDownloadFolder+"/rclone", "/usr/bin/")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err = cmd.Run()
@@ -439,7 +443,7 @@ func installRcloneOnLinux(rcloneURL string, rcloneDownloadFolder string) error {
 		return err
 	}
 
-	cmd = exec.Command("sudo", "scp", rcloneDownloadFolder+"/rclone.1", "/usr/local/share/man/man1/")
+	cmd = exec.Command("sudo", "cp", rcloneDownloadFolder+"/rclone.1", "/usr/local/share/man/man1/")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err = cmd.Run()
@@ -519,7 +523,7 @@ WantedBy=multi-user.target`
 }
 
 func installRequiredCommands() {
-	requiredCommands := []string{"systemctl", "curl", "scp"}
+	requiredCommands := []string{"sudo", "systemctl", "curl", "man-db"}
 
 	for _, command := range requiredCommands {
 		if !isCommandAvailable(command) {

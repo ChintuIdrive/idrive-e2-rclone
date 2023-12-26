@@ -7,21 +7,21 @@ WORKDIR /go/src/app
 # Install necessary dependencies
 RUN apt-get update && \
     apt-get install -y \
-    # curl \
-    openssh-client \
-    unzip \
-    sudo \
-    man-db \
-    libgl1-mesa-dev \
-    libxrandr2 \
-    libx11-xcb-dev \
-    libwayland-dev \
-    libxkbcommon-dev \
-    libxcursor-dev \
-    libxi-dev \
-    libxinerama-dev \
-    xorg-dev \
-    gcc
+    # # curl \
+    # #openssh-client \
+    # #unzip \
+     sudo 
+    # #man-db \
+    # libgl1-mesa-dev \
+    # libxrandr2 \
+    # libx11-xcb-dev \
+    # libwayland-dev \
+    # libxkbcommon-dev \
+    # libxcursor-dev \
+    # libxi-dev \
+    # libxinerama-dev \
+    # xorg-dev \
+    # gcc
 
 # Copy the current directory contents into the container at /go/src/app
 COPY app .

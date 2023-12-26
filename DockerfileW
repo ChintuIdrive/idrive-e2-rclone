@@ -1,0 +1,13 @@
+# Use the latest Windows Server Core image as the base
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
+
+# Install some software using PowerShell commands
+RUN powershell -Command \
+Install-WindowsFeature Web-Server; \
+Install-WindowsFeature NET-Framework-45-ASPNET; \
+Install-WindowsFeature Web-Asp-Net45
+
+# Copy some files from the host to the container
+COPY index.html C:\\inetpub\\wwwroot
+
+# Expose port 80 for the web server
